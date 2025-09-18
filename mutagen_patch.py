@@ -1,22 +1,19 @@
-from pathlib import Path
-from mutagen.bethesda import ESM
+from esp_tool import ESM
 
-input_path = Path("input.esp")
-output_path = Path("output.esp")
+input_file = "input.esp"
+output_file = "output.esp"
 
-if not input_path.exists():
-    print("ERROR: input.esp not found!")
-    exit(1)
+# Load the ESP/ESM file
+esm = ESM(input_file)
 
-# Read the input ESP
-with input_path.open("rb") as f:
-    data = f.read()
+# Example: Print plugin info
+print(f"Loaded plugin: {esm.header.name}, {len(esm.records)} records")
 
-# Load with Mutagen (this checks if the file is valid)
-esp = ESM(data)
+# --- PATCHING LOGIC START ---
+# You can modify esm.records here if you want to patch the plugin.
+# For now, this script just copies the file as a round-trip test.
+# --- PATCHING LOGIC END ---
 
-# Write out the exact same file (round-trip test)
-with output_path.open("wb") as f:
-    f.write(esp.to_bytes())
-
-print("Successfully read and wrote ESP file.")
+# Save as output.esp
+esm.save(output_file)
+print(f"Patched ESP written to {output_file}")
