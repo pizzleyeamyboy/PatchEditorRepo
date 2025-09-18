@@ -1,4 +1,5 @@
 using System;
+using System.Linq; // Add this line
 using Mutagen.Bethesda.Skyrim;
 using Mutagen.Bethesda.Plugins;
 
@@ -12,7 +13,7 @@ class Program
         // Load the mod
         var mod = SkyrimMod.CreateFromBinaryOverlay(inputPath, SkyrimRelease.SkyrimSE);
 
-        Console.WriteLine($"Loaded {mod.ModKey}: {mod.EnumerateMajorRecords().Count} top-level records");
+        Console.WriteLine($"Loaded {mod.ModKey}: {mod.EnumerateMajorRecords().Count()} top-level records"); // Fixed line
 
         // --- PATCHING LOGIC START ---
         // Example: enumerate leveled lists
