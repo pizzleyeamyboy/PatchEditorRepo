@@ -6,7 +6,6 @@ on:
 jobs:
   patch:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -16,14 +15,14 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install Mutagen
-        run: pip install mutagen
+      - name: Install esp_tool
+        run: pip install git+https://github.com/matortheeternal/esp_tool.git
 
-      - name: Run Mutagen Patch Script
+      - name: Run patch script
         run: python mutagen_patch.py
 
-      - name: Commit changes
+      - name: Commit patched ESP
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Apply mutagen patch to ESP files"
-          branch: ${{ github.ref }}
+          commit_message: "Patch output.esp"
+          file_pattern: output.esp
