@@ -1,10 +1,22 @@
-import os
+from pathlib import Path
+from mutagen.bethesda import ESM
 
-# List all ESP files in the current directory
+input_path = Path("input.esp")
+output_path = Path("output.esp")
 
-def list_esp_files():
-    esp_files = [f for f in os.listdir('.') if f.endswith('.esp')]
-    return esp_files
+if not input_path.exists():
+    print("ERROR: input.esp not found!")
+    exit(1)
 
-if __name__ == '__main__':
-    print('ESP Files:', list_esp_files())
+# Read the input ESP
+with input_path.open("rb") as f:
+    data = f.read()
+
+# Load with Mutagen (this checks if the file is valid)
+esp = ESM(data)
+
+# Write out the exact same file (round-trip test)
+with output_path.open("wb") as f:
+    f.write(esp.to_bytes())
+
+print("Successfully read and wrote ESP file.")
