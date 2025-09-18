@@ -19,7 +19,9 @@ jobs:
         run: dotnet build PatchProject/PatchProject.csproj --configuration Release
 
       - name: Run patcher
-        run: dotnet PatchProject/bin/Release/net8.0/PatchProject.dll
+        run: |
+          cd "$GITHUB_WORKSPACE"
+          dotnet PatchProject/bin/Release/net8.0/PatchProject.dll
 
       - name: Commit patched ESP
         uses: stefanzweifel/git-auto-commit-action@v5
