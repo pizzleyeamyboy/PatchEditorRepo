@@ -1,7 +1,6 @@
 using System;
 using Mutagen.Bethesda.Skyrim;
 using Mutagen.Bethesda.Plugins;
-using Mutagen.Bethesda.Plugins.Standalone;
 
 class Program
 {
@@ -10,12 +9,25 @@ class Program
         var inputPath = "../input.esp";
         var outputPath = "../output.esp";
 
-        var mod = SkyrimMod.CreateFromBinary(inputPath, SkyrimRelease.SkyrimSE);
+        // Load the mod
+        var mod = SkyrimMod.CreateFromBinaryOverlay(inputPath, SkyrimRelease.SkyrimSE);
 
         Console.WriteLine($"Loaded {mod.ModKey}: {mod.EnumerateMajorRecords().Count} top-level records");
 
         // --- PATCHING LOGIC START ---
-        // You could modify records here.
+        // Example: enumerate leveled lists
+        foreach (var ll in mod.LeveledItems)
+        {
+            Console.WriteLine($"LeveledList EditorID: {ll.EditorID}, FormKey: {ll.FormKey}");
+            // Example modification (optional)
+            // ll.Entries.Add(new LeveledItemEntry {
+            //     Data = new LeveledItemEntryData {
+            //         Reference = new FormLink<ISkyrimMajorRecordGetter>(FormKey.Factory("000139B5:Skyrim.esm")),
+            //         Level = 1,
+            //         Count = 1
+            //     }
+            // });
+        }
         // --- PATCHING LOGIC END ---
 
         mod.WriteToBinary(outputPath);
