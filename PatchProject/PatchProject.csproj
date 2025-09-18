@@ -4,12 +4,11 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <OutputType>Exe</OutputType>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Mutagen.BetterErrorHandling" Version="1.0.0" />
-    <PackageReference Include="Mutagen.BetterLogging" Version="1.0.0" />
-    <PackageReference Include="Mutagen.BetterPerformance" Version="1.0.0" />
+    <PackageReference Include="Mutagen.Bethesda.Skyrim" Version="0.51.3" />
   </ItemGroup>
 
 </Project>
